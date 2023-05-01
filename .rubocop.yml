@@ -1,0 +1,7 @@
+require: 
+  - rubocop-rails
+  - rubocop-capybara
+
+Layout/LineLength:
+  Max: 80
+
