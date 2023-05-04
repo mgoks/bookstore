@@ -60,6 +60,20 @@ class ProductTest < ActiveSupport::TestCase
                  product.errors[:title]
   end
 
+  test 'product title must ne at least ten characters long' do
+    product_short_title = new_product('fred.gif')
+    product_10_char_title = new_product('fred.gif')
+    product_long_title = new_product('fred.gif')
+
+    product_short_title.title = 'short'
+    product_10_char_title.title = '1234567890'
+    product_long_title.title = 'this is definitely longer than 10 characters'
+
+    assert product_short_title.invalid?
+    assert product_10_char_title.valid?
+    assert product_long_title.valid?
+  end
+
   def new_product(image_url)
     Product.new(title: 'My Book Title',
                 description: 'yyy',
