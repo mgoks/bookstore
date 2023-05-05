@@ -61,7 +61,13 @@ class ProductsControllerTest < ActionDispatch::IntegrationTest
     assert_difference('Product.count', -1) do
       delete product_url(@product)
     end
-
     assert_redirected_to products_url
+  end
+
+  # Functional tests
+  test 'should get products' do
+    get products_url
+    assert_response :success
+    assert_select 'nav a', minimum: 4
   end
 end
