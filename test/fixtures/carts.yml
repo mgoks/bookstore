@@ -9,3 +9,7 @@ one: {}
 #
 two: {}
 # column: value
+
+cart_single_item: {}
+
+cart_two_items: {}

@@ -4,6 +4,8 @@ class CartsController < ApplicationController
   before_action :set_cart, only: %i[show edit update destroy]
   rescue_from ActiveRecord::RecordNotFound, with: :invalid_cart
 
+  # TODO Prevent accessing any cart other than than one currently stored in the
+  # session e.g., https://localhost/carts/3.
 
   # GET /carts or /carts.json
   def index

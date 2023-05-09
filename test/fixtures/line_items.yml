@@ -8,3 +8,16 @@ one:
 two:
   product: two
   cart: two
+
+ruby_line_item_in_cart_two_items:
+  product: ruby
+  cart: cart_two_items
+
+apis_line_item_in_cart_two_items:
+  product: apis
+  cart: cart_two_items
+
+# Line item in a cart that has no other line items
+line_item_in_cart_single_item:
+  product: ruby
+  cart: cart_single_item

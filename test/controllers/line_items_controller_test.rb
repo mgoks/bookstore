@@ -4,7 +4,10 @@ require 'test_helper'
 
 class LineItemsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @line_item = line_items(:one)
+    @cart_single_item = carts(:cart_single_item)
+    @cart_two_items = carts(:cart_two_items)
+    @line_item = line_items(:ruby_line_item_in_cart_two_items)
+    @single_line_item = line_items(:line_item_in_cart_single_item)
   end
 
   test 'should get index' do
@@ -39,20 +42,23 @@ class LineItemsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should update line_item' do
-    patch line_item_url(@line_item),
-          params: { 
-            line_item: { 
-              product_id: @line_item.product_id 
-            } 
-          }
+    patch line_item_url(@line_item), params: { 
+      line_item: { 
+        product_id: @line_item.product_id 
+      } 
+    }
     assert_redirected_to line_item_url(@line_item)
   end
 
-  test 'should destroy line_item' do
+  test 'should destroy line_item and cart' do
+    #TODO
+  end
+
+  test 'should destroy line item and keep cart' do
     assert_difference('LineItem.count', -1) do
       delete line_item_url(@line_item)
     end
-
-    assert_redirected_to line_items_url
+    assert !@cart_two_items.destroyed?
+    assert_redirected_to cart_url(@cart_two_items)
   end
 end

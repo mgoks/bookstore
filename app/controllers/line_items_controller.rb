@@ -61,26 +61,30 @@ class LineItemsController < ApplicationController
 
   # DELETE /line_items/1 or /line_items/1.json
   def destroy
+    cart = @line_item.cart
     @line_item.destroy
 
     respond_to do |format|
       format.html do
-        redirect_to line_items_url,
-                    notice: 'Line item was successfully destroyed.'
+        if cart.line_items.empty?
+          cart.destroy
+          redirect_to store_index_url, notice: 'Your cart is currently empty.'
+        else
+          redirect_to cart_url(cart)
+        end
       end
       format.json { head :no_content }
     end
   end
 
   private
+    # Use callbacks to share common setup or constraints between actions.
+    def set_line_item
+      @line_item = LineItem.find(params[:id])
+    end
 
-  # Use callbacks to share common setup or constraints between actions.
-  def set_line_item
-    @line_item = LineItem.find(params[:id])
-  end
-
-  # Only allow a list of trusted parameters through.
-  def line_item_params
-    params.require(:line_item).permit(:product_id)
-  end
+    # Only allow a list of trusted parameters through.
+    def line_item_params
+      params.require(:line_item).permit(:product_id)
+    end
 end
