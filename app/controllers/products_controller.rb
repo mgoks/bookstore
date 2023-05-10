@@ -48,6 +48,7 @@ class ProductsController < ApplicationController
                       notice: 'Product was successfully updated.'
         end
         format.json { render :show, status: :ok, location: @product }
+        @product.broadcast_replace_later_to 'products', partial: 'store/product'
       else
         format.html { render :edit, status: :unprocessable_entity }
         format.json do
