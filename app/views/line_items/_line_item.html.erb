@@ -12,7 +12,15 @@
 
     <!-- TODO Add functionality to decrement line item quantity. -->
     <td>
-      <%= button_to 'remove', line_item, method: :delete, 
-            class: 'ml-4 rounded-lg py-1 px-2 text-white bg-green-600' %> 
+      <% if line_item.quantity > 1 %>
+        <!-- Decrement quantity -->
+        <%= button_to '-', line_item, method: :patch, 
+              params: { line_item: { quantity: line_item.quantity - 1 } }, 
+              class: 'ml-4 rounded-lg py-1 px-2 text-white bg-green-600'%>
+      <% else %>
+        <!-- Remove line item completely -->
+        <%= button_to 'X', line_item, method: :delete, 
+              class: 'ml-4 rounded-lg py-1 px-2 text-white bg-green-600' %> 
+      <% end %>
     </td>
   </tr>

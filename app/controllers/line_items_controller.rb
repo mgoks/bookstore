@@ -45,8 +45,7 @@ class LineItemsController < ApplicationController
     respond_to do |format|
       if @line_item.update(line_item_params)
         format.html do
-          redirect_to line_item_url(@line_item),
-                      notice: 'Line item was successfully updated.'
+          redirect_to store_index_url
         end
         format.json { render :show, status: :ok, location: @line_item }
       else
@@ -67,9 +66,11 @@ class LineItemsController < ApplicationController
       format.html do
         if cart.line_items.empty?
           cart.destroy
+          # Notice is not displayed after destroying the cart.
+          # TODO Figure out what is happening to it and make it display.
           redirect_to store_index_url, notice: 'Your cart is currently empty.'
         else
-          redirect_to cart_url(cart)
+          redirect_to store_index_url
         end
       end
       format.json { head :no_content }
@@ -84,6 +85,6 @@ class LineItemsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def line_item_params
-      params.require(:line_item).permit(:product_id)
+      params.require(:line_item).permit(:product_id, :quantity)
     end
 end
