@@ -27,16 +27,16 @@ class LineItemsControllerTest < ActionDispatch::IntegrationTest
     end
     follow_redirect!
     assert_select 'h2', 'Your Cart'
-    assert_select 'td', "Programming Ruby 1.9"
+    assert_select 'td', 'Programming Ruby 1.9'
   end
 
   test 'should create line item via turbo-stream' do
     assert_difference('LineItem.count') do
-      post line_items_url, params: {product_id: products(:ruby).id },
-           as: :turbo_stream
+      post line_items_url, params: { product_id: products(:ruby).id },
+                           as: :turbo_stream
     end
     assert_response :success
-    assert_match /<tr class="line-item-highlight">/, @response.body
+    assert_match(/<tr class="line-item-highlight">/, @response.body)
   end
 
   test 'should show line_item' do
@@ -50,16 +50,16 @@ class LineItemsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should update line_item' do
-    patch line_item_url(@line_item), params: { 
-      line_item: { 
-        product_id: @line_item.product_id 
-      } 
+    patch line_item_url(@line_item), params: {
+      line_item: {
+        product_id: @line_item.product_id
+      }
     }
     assert_redirected_to store_index_url
   end
 
   test 'should update line item via turbo-stream' do
-    #TODO
+    # TODO
   end
 
   test 'should destroy line item ' do
@@ -72,12 +72,10 @@ class LineItemsControllerTest < ActionDispatch::IntegrationTest
     assert_not cart.destroyed?
     assert_redirected_to store_index_url
 
-    # TODO Destroy line item and cart.
-
+    # TODO: Destroy line item and cart.
   end
 
   test 'should destory line item via turbo-stream' do
-    #TODO
+    # TODO
   end
-
 end

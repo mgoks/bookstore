@@ -28,7 +28,7 @@ class LineItemsController < ApplicationController
 
     respond_to do |format|
       if @line_item.save
-        format.turbo_stream {@current_item = @line_item }
+        format.turbo_stream { @current_item = @line_item }
         format.html { redirect_to store_index_url }
         format.json { render :show, status: :created, location: @line_item }
       else
@@ -48,7 +48,8 @@ class LineItemsController < ApplicationController
           render turbo_stream: turbo_stream.replace(
             :cart,
             partial: 'layouts/cart',
-            locals: {cart: @cart})
+            locals: { cart: @cart }
+          )
         end
         format.html do
           redirect_to store_index_url
@@ -72,9 +73,10 @@ class LineItemsController < ApplicationController
       format.turbo_stream do
         cart.destroy if cart.line_items.empty?
         render turbo_stream: turbo_stream.replace(
-          :cart, 
-          partial: 'layouts/cart', 
-          locals: {cart: @cart})
+          :cart,
+          partial: 'layouts/cart',
+          locals: { cart: @cart }
+        )
       end
 
       format.html do
@@ -93,13 +95,14 @@ class LineItemsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_line_item
-      @line_item = LineItem.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def line_item_params
-      params.require(:line_item).permit(:product_id, :quantity)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_line_item
+    @line_item = LineItem.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def line_item_params
+    params.require(:line_item).permit(:product_id, :quantity)
+  end
 end

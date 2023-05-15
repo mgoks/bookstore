@@ -4,7 +4,7 @@ class CartsController < ApplicationController
   before_action :set_cart, only: %i[show edit update destroy]
   rescue_from ActiveRecord::RecordNotFound, with: :invalid_cart
 
-  # TODO Prevent accessing any cart other than than one currently stored in the
+  # TODO: Prevent accessing any cart other than than one currently stored in the
   # session e.g., https://localhost/carts/3.
 
   # GET /carts or /carts.json
@@ -62,9 +62,9 @@ class CartsController < ApplicationController
 
     respond_to do |format|
       format.turbo_stream do
-        render turbo_stream: turbo_stream.replace(:cart, 
-                                                  partial: 'layouts/cart', 
-                                                  locals: {cart: @cart})
+        render turbo_stream: turbo_stream.replace(:cart,
+                                                  partial: 'layouts/cart',
+                                                  locals: { cart: @cart })
       end
       format.html do
         redirect_to store_index_url, notice: 'Your cart is currently empty.'
@@ -74,20 +74,21 @@ class CartsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_cart
-      @cart = Cart.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def cart_params
-      params.fetch(:cart, {})
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_cart
+    @cart = Cart.find(params[:id])
+  end
 
-    def invalid_cart
-      logger.error "Attempt to access invalid cart #{params[:id]}"
+  # Only allow a list of trusted parameters through.
+  def cart_params
+    params.fetch(:cart, {})
+  end
 
-      # Redirect to expose less of the app i.e., only domain name.
-      redirect_to store_index_url, notice: 'Invalid cart'
-    end
+  def invalid_cart
+    logger.error "Attempt to access invalid cart #{params[:id]}"
+
+    # Redirect to expose less of the app i.e., only domain name.
+    redirect_to store_index_url, notice: 'Invalid cart'
+  end
 end
