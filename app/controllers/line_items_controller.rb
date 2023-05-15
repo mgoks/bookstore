@@ -2,7 +2,7 @@
 
 class LineItemsController < ApplicationController
   include CurrentCart
-  before_action :set_cart, only: %i[create]
+  before_action :set_cart, only: %i[create update destroy]
   before_action :set_line_item, only: %i[show edit update destroy]
 
   # GET /line_items or /line_items.json
@@ -44,6 +44,12 @@ class LineItemsController < ApplicationController
   def update
     respond_to do |format|
       if @line_item.update(line_item_params)
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace(
+            :cart,
+            partial: 'layouts/cart',
+            locals: {cart: @cart})
+        end
         format.html do
           redirect_to store_index_url
         end
@@ -63,6 +69,14 @@ class LineItemsController < ApplicationController
     @line_item.destroy
 
     respond_to do |format|
+      format.turbo_stream do
+        cart.destroy if cart.line_items.empty?
+        render turbo_stream: turbo_stream.replace(
+          :cart, 
+          partial: 'layouts/cart', 
+          locals: {cart: @cart})
+      end
+
       format.html do
         if cart.line_items.empty?
           cart.destroy
@@ -73,6 +87,7 @@ class LineItemsController < ApplicationController
           redirect_to store_index_url
         end
       end
+
       format.json { head :no_content }
     end
   end

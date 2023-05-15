@@ -4,9 +4,10 @@ require 'test_helper'
 
 class LineItemsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @cart_single_item = carts(:cart_single_item)
-    @cart_two_items = carts(:cart_two_items)
+    # Not the only line item in the cart
     @line_item = line_items(:ruby_line_item_in_cart_two_items)
+
+    # Only line item in the cart
     @single_line_item = line_items(:line_item_in_cart_single_item)
   end
 
@@ -54,18 +55,29 @@ class LineItemsControllerTest < ActionDispatch::IntegrationTest
         product_id: @line_item.product_id 
       } 
     }
-    assert_redirected_to line_item_url(@line_item)
+    assert_redirected_to store_index_url
   end
 
-  test 'should destroy line_item and cart' do
+  test 'should update line item via turbo-stream' do
     #TODO
   end
 
-  test 'should destroy line item and keep cart' do
+  test 'should destroy line item ' do
+    # Destroy the line item in cart and keep cart.
+    cart = @line_item.cart
+    assert cart.line_items.length > 1
     assert_difference('LineItem.count', -1) do
       delete line_item_url(@line_item)
     end
-    assert !@cart_two_items.destroyed?
-    assert_redirected_to cart_url(@cart_two_items)
+    assert_not cart.destroyed?
+    assert_redirected_to store_index_url
+
+    # TODO Destroy line item and cart.
+
   end
+
+  test 'should destory line item via turbo-stream' do
+    #TODO
+  end
+
 end
