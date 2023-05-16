@@ -6,7 +6,8 @@ one:
   cart: one
 
 two:
-  product: two
+  product: ruby
+  order: one
   cart: two
 
 ruby_line_item_in_cart_two_items:
