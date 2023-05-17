@@ -20,7 +20,9 @@
     <%= button_to 'Empty cart', cart, method: :delete, 
                   class: 'ml-4 rounded-lg py-1 px-2 text-white bg-green-600' %>
 
-    <%= button_to 'Check out', new_order_path, method: :get, 
-                  class: 'ml-4 rounded-lg py-1 px-2 text-black bg-green-200' %>
+    <% if not current_page?(controller: 'orders', action: 'new') %>
+      <%= button_to 'Check out', new_order_path, method: :get, 
+            class: 'ml-4 rounded-lg py-1 px-2 text-black bg-green-200' %>
+    <% end %>
   </div>
 </div>
