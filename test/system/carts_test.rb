@@ -9,7 +9,7 @@ class CartsTest < ApplicationSystemTestCase
     refute_selector 'h2', text: 'Your Cart'
     click_on 'Add to Cart', match: :first
     assert_selector 'h2', text: 'Your Cart'
-    click_on 'Empty cart' 
+    click_on 'Empty cart'
     refute_selector 'h2', text: 'Your Cart'
   end
 end
