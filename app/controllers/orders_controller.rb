@@ -33,10 +33,7 @@ class OrdersController < ApplicationController
       if @order.save
         Cart.destroy(session[:cart_id])
         session[:cart_id] = nil
-
-        # Send the 'order-received' email.
-        OrderMailer.received(@order).deliver_later
-
+        ChargeOrderJob.perform_later(@order, pay_type_params.to_h)
         format.html do
           redirect_to store_index_url, notice: 'Thank you for your order.'
         end
@@ -89,15 +86,25 @@ class OrdersController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def order_params
-    params.require(:order).permit(:name, :address, :email, :pay_type,
-                                  :routing_number, :account_number,
-                                  :credit_card_number, :expiration_date,
-                                  :po_number)
+    params.require(:order).permit(:name, :address, :email, :pay_type)
   end
 
   def ensure_cart_isnt_empty
     return unless @cart.line_items.empty?
 
     redirect_to store_index_url, notice: 'Your cart is empty.'
+  end
+
+  def pay_type_params
+    case order_params[:pay_type]
+    when 'Credit card'
+      params.require(:order).permit(:credit_card_number, :expiration_date)
+    when 'Check'
+      params.require(:order).permit(:routing_number, :account_number)
+    when 'Purchase order'
+      params.require(:order).permit(:po_number)
+    else
+      {}
+    end
   end
 end
