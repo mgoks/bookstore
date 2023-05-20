@@ -1,0 +1,9 @@
+Dear <%= @order.name %>,
+Thank you for your recent order from Mooch's Bookstore. You ordered the following item(s):
+<%= render @order.line_items -%>
+
+We will send you a separate e-mail when your order ships.
+
+Best,
+Mooch's Bookstore
+

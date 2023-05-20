@@ -1,0 +1,11 @@
+<h3> Mooch's Bookstore order shipped </h3>
+
+<p>This is just to let you that we have shipped your recent order:</p>
+
+<table>
+  <tr>
+    <th colspan="2">Qty</th>
+    <th>Description</th>
+  </tr>
+  <%= render @order.line_items -%>
+</table>
