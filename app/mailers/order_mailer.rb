@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class OrderMailer < ApplicationMailer
-  default from: 'Murat Goksel noreply@moochsbookstore.com'
+  default from: 'Mooch\'s Bookstore <noreply@moochsbookstore.com>'
 
   # Subject can be set in your I18n file at config/locales/en.yml
   # with the following lookup:
