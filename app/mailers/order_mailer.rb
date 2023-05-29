@@ -22,4 +22,10 @@ class OrderMailer < ApplicationMailer
     @order = order
     mail to: order.email, subject: "Mooch's Bookstore order shipped"
   end
+
+  def ship_date_updated(order)
+    @order = order
+    mail to: order.mail, subject: "Mooch's Bookstore order shipping date
+                                  updated"
+  end
 end

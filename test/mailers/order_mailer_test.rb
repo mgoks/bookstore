@@ -11,7 +11,7 @@ class OrderMailerTest < ActionMailer::TestCase
     # TODO: Figure out why the actual value is different.
     # assert_equal ["noreply@moochsbookstore.com"], mail.from
 
-    assert_equal 'Murat Goksel noreply@moochsbookstore.com', mail.from
+    assert_equal ['noreply@moochsbookstore.com'], mail.from
 
     # TODO: Figure why this is failing
     # assert_match /1 x Programming Ruby 1.9/, mail.body.encoded
@@ -25,9 +25,9 @@ class OrderMailerTest < ActionMailer::TestCase
     # TODO: Figure out why the actual value is different.
     # assert_equal ["noreply@moochsbookstore.com"], mail.from
 
-    assert_equal 'Murat Goksel noreply@moochsbookstore.com', mail.from
+    assert_equal ['noreply@moochsbookstore.com'], mail.from
 
-    # TODO: Figure why this is failing
+    # TODO: Figure out why this is failing
     # assert_match %r(
     #   <td[^>]*>1<\/td>\s*
     #   <td>&times;<\/td>\s*

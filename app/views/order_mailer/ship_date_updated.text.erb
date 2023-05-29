@@ -1,0 +1,8 @@
+Dear <%= @order.name %>,
+You ordered the following items:
+<%= render @order.line_items -%>
+
+We would like to let you know that the shipment date for this order has been updated. If you have any questions please do not hesitate to contact us.
+
+Best wishes,
+Mooch's Bookstore
