@@ -3,6 +3,7 @@
 class CartsController < ApplicationController
   before_action :set_cart, only: %i[show edit update destroy]
   rescue_from ActiveRecord::RecordNotFound, with: :invalid_cart
+  skip_before_action :authorize, only: %i[create update destroy]
 
   # TODO: Prevent accessing any cart other than than one currently stored in the
   # session e.g., https://localhost/carts/3.

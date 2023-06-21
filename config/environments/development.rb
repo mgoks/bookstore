@@ -48,20 +48,20 @@ Rails.application.configure do
   # Typical settings for Gmail
   config.action_mailer.delivery_method = :test
   config.action_mailer.smtp_settings = {
-    address:              'smtp.gmail.com',
-    port:                 587,
-    domain:               'moochsbookstore.com',
-    authentication:       'plain',
-    user_name:            'noreply@moochsbookstore.com',
-    password:             'notarealpassword',
-    enable_starttls_auto: true,
+    address: 'smtp.gmail.com',
+    port: 587,
+    domain: 'moochsbookstore.com',
+    authentication: 'plain',
+    user_name: 'noreply@moochsbookstore.com',
+    password: 'notarealpassword',
+    enable_starttls_auto: true
   }
 
   config.action_mailer.default_url_options = {
-    host:     'localhost:3000',
-    protocol: 'http',
+    host: 'localhost:3000',
+    protocol: 'http'
   }
-  
+
   # Get those error logs for email.
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
